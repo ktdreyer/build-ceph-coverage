@@ -27,7 +27,14 @@ TAGS = ('ceph-3.0-rhel-7',)
 
 def get_koji_session():
     # Return an unauthenticated koji session
-    conf = koji.read_config(PROFILE)
+    try:
+        conf = koji.read_config(PROFILE)
+    except koji.ConfigurationError as e:
+        if 'no configuration for profile name' in str(e):
+            print('You are missing the brewkoji RPM. Please install it.')
+            print('It is available in the RCMTOOLS composes.')
+            print('http://download.devel.redhat.com/rel-eng/RCMTOOLS/')
+        raise
     hub = conf['server']
     opts = {'krbservice': conf['krbservice']}
     session = koji.ClientSession(hub, opts)
