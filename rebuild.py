@@ -22,7 +22,7 @@ repository for QE to consume.
 PROFILE = 'brew'  # from /etc/koji.conf.d
 PACKAGE = 'ceph'
 KEY = 'fd431d51'  # Red Hat release key
-TAGS = ('ceph-3.0-rhel-7',)
+TAGS = ('ceph-3.1-rhel-7',)
 
 
 def get_koji_session():
