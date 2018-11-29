@@ -162,7 +162,7 @@ def scratch_build(session, tag, srpm):
 
     session.uploadWrapper(srpm, serverdir, callback=callback)
     source = "%s/%s" % (serverdir, os.path.basename(srpm))
-    opts = {'scratch': 'true'}
+    opts = {'scratch': 'true', 'arch_override': 'x86_64'}
 
     task_id = session.build(source, target, opts)
     return task_id
