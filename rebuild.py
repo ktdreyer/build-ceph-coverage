@@ -143,9 +143,21 @@ def munge_spec(path, build):
                 fileh.write('Release: %s\n' % release)
             elif re.match(r'cmake ', line):
                 fileh.write(line)
-                fileh.write('    -DENABLE_COVERAGE=1 \\\n')
+                text = read_fragment('cmake')
+                fileh.write(text)
             else:
                 fileh.write(line)
+
+
+def read_fragment(name):
+    """
+    Read a .txt file from the "fragments" directory, and return its contents.
+    """
+    app_dir = os.path.dirname(os.path.abspath(__file__))
+    basename = '%s.txt' % name
+    filename = os.path.join(app_dir, 'fragments', basename)
+    with open(filename) as fh:
+        return fh.read()
 
 
 def pack_srpm(path):
