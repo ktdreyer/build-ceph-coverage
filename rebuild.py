@@ -119,7 +119,15 @@ def unpack_srpm(srpm):
 
 
 def munge_spec(path, build):
-    # Manipulate ceph.spec by inserting -DENABLE_COVERAGE=1 as a cmake option
+    """
+    Manipulate ceph.spec with the changes we need for a coverage build.
+
+    1. Bump the release value
+    2. Insert -DENABLE_COVERAGE=1 as a cmake option
+
+    :param path: directory where PACKAGE .spec file is located
+    :param build: buildinfo data from Koji
+    """
     spec = os.path.join(path, '%s.spec' % PACKAGE)
     m = re.match(r'\d+', build['release'])
     if not m:
