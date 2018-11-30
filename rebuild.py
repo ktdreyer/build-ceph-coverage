@@ -236,25 +236,31 @@ def write_props(srpm, tag):
     pass
 
 
-session = get_koji_session()
-for tag in TAGS:
-    build = latest_build(session, tag)
-    # TODO: test if we've already built this NVR, to avoid rebuilding it again.
+def main():
+    session = get_koji_session()
+    for tag in TAGS:
+        build = latest_build(session, tag)
+        # TODO: test if we've already built this NVR, to avoid rebuilding it
+        # again.
 
-    tempdir = '/tmp/rebuild'  # todo: use real tmpdir instead
-    srpm = download_srpm(session, build, tempdir)
-    unpack_srpm(srpm)
+        tempdir = '/tmp/rebuild'  # todo: use real tmpdir instead
+        srpm = download_srpm(session, build, tempdir)
+        unpack_srpm(srpm)
 
-    # Update the packaging
-    munge_spec(tempdir, build)
-    srpm = pack_srpm(tempdir)
+        # Update the packaging
+        munge_spec(tempdir, build)
+        srpm = pack_srpm(tempdir)
 
-    # Build this new package
-    task_id = scratch_build(session, tag, srpm)
-    watch_scratch_build(session, task_id)
-    store_binaries(session, task_id, tempdir)
+        # Build this new package
+        task_id = scratch_build(session, tag, srpm)
+        watch_scratch_build(session, task_id)
+        store_binaries(session, task_id, tempdir)
 
-    # Repository work
-    generate_repository(tempdir)
-    publish_repository(tempdir, tag)
-    write_props(srpm, tag)
+        # Repository work
+        generate_repository(tempdir)
+        publish_repository(tempdir, tag)
+        write_props(srpm, tag)
+
+
+if __name__ == '__main__':
+    main()
