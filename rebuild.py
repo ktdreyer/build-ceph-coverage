@@ -159,7 +159,6 @@ def pack_srpm(path):
 
 def scratch_build(session, tag, srpm):
     """ scratch-build the SRPM in Koji. Return the Koji task ID. """
-    # return 15237032  # XXX DEBUGGING
     target = tag + '-candidate'  # move to separate method?
 
     serverdir = unique_path('cli-build')
