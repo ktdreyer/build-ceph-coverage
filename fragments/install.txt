@@ -1,0 +1,7 @@
+mkdir -p %{buildroot}/usr/src/coverage/ceph/
+cp -r src %{buildroot}/usr/src/coverage/ceph/
+find %{buildroot}/usr/src/coverage/ceph/ -name "*.o" -print0 | xargs -0 rm
+# Don't byte-compile python:
+find %{buildroot}/usr/src/coverage/ceph/ -name "*.py" -print0 | xargs -0 rm
+# Delete some binaries here:
+rm -r %{buildroot}/usr/src/coverage/ceph/src/boost

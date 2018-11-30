@@ -124,6 +124,8 @@ def munge_spec(path, build):
 
     1. Bump the release value
     2. Insert -DENABLE_COVERAGE=1 as a cmake option
+    3. Copy processed source and gcno files to /usr/src/coverage/ceph
+    4. Add new "ceph-coverage" subpackage
 
     :param path: directory where PACKAGE .spec file is located
     :param build: buildinfo data from Koji
@@ -136,15 +138,27 @@ def munge_spec(path, build):
     release = '%d.coverage%%{dist}' % releaseint
     with open(spec) as fileh:
         lines = fileh.readlines()
-    print('rewriting %s with "Release: %s" and cmake change' % (release, spec))
+    print('rewriting %s with coverage changes' % spec)
     with open(spec, 'w') as fileh:
         for line in lines:
             if re.match(r'\s*Release:', line):
                 fileh.write('Release: %s\n' % release)
+            elif re.match(r'%prep', line):
+                text = read_fragment('package')
+                fileh.write(text)
+                fileh.write(line)
             elif re.match(r'cmake ', line):
                 fileh.write(line)
                 text = read_fragment('cmake')
                 fileh.write(text)
+            elif re.match(r'%install', line):
+                fileh.write(line)
+                text = read_fragment('install')
+                fileh.write(text)
+            elif re.match(r'%files base', line):
+                text = read_fragment('files')
+                fileh.write(text)
+                fileh.write(line)
             else:
                 fileh.write(line)
 
