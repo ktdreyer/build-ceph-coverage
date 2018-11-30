@@ -178,7 +178,7 @@ def watch_scratch_build(session, task_id):
         raise RuntimeError('scratch build failed')
 
 
-def store_binaries(task_id, path):
+def store_binaries(session, task_id, path):
     """
     Store the resulting binaries from a Brew scratch build
     (really wish this was part of the official koji api...)
@@ -252,7 +252,7 @@ for tag in TAGS:
     # Build this new package
     task_id = scratch_build(session, tag, srpm)
     watch_scratch_build(session, task_id)
-    store_binaries(task_id, tempdir)
+    store_binaries(session, task_id, tempdir)
 
     # Repository work
     generate_repository(tempdir)
