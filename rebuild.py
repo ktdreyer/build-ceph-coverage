@@ -12,7 +12,12 @@ from koji_cli.lib import watch_tasks
 from koji_cli.lib import list_task_output_all_volumes
 from koji_cli.lib import download_file
 # borrow some private pieces of the koji cli for scratch-building
-from koji_cli.lib import _unique_path, _progress_callback
+from koji_cli.lib import _progress_callback
+try:
+    # Available in Koji v1.17, https://pagure.io/koji/issue/975
+    from koji_cli.lib import unique_path
+except ImportError:
+    from koji_cli.lib import _unique_path as unique_path
 
 """
 Rebuild the ceph package with code coverage enabled, and publish a
@@ -157,7 +162,7 @@ def scratch_build(session, tag, srpm):
     # return 15237032  # XXX DEBUGGING
     target = tag + '-candidate'  # move to separate method?
 
-    serverdir = _unique_path('cli-build')
+    serverdir = unique_path('cli-build')
     callback = _progress_callback
 
     session.uploadWrapper(srpm, serverdir, callback=callback)
