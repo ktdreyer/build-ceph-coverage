@@ -34,3 +34,16 @@ Ensure you have a Kerberos ticket::
 Run the script::
 
    ./rebuild.py
+
+Results
+-------
+
+This generates a new ``ceph-coverage`` RPM that you can download. This package
+ships the ``.cc`` and ``.gcno`` files in ``/usr/src/coverage/ceph``.
+
+To extract this RPM on an Ubuntu system (without installing it), you can run::
+
+   rpm2cpio path/to/ceph-coverage-12.2.5-1.noarch.el7cp | cpio -dium
+
+This ``rpm2cpio ... | cpio -dium`` command will extract all the RPM's files
+into the current working directory.
