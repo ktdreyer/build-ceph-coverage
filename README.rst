@@ -9,6 +9,7 @@ This allows QE to use these builds to get code coverage metrics.
 
 Prerequisites
 -------------
+
 You will need the ``brewkoji`` package::
 
     (Add the RCMTOOLS repository to /etc/yum.repos.d)
@@ -17,6 +18,7 @@ You will need the ``brewkoji`` package::
 
 Getting the code
 ----------------
+
 Clone this repository::
 
     git clone https://github.com/ktdreyer/build-ceph-coverage
@@ -24,6 +26,7 @@ Clone this repository::
 
 Running
 -------
+
 Ensure you have a Kerberos ticket::
 
    kinit kdreyer
