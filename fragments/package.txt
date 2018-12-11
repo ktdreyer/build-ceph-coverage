@@ -1,6 +1,5 @@
 %package coverage
 Summary:        Coverage files for Ceph
-BuildArch: noarch
 %description coverage
 Files for determining Ceph code coverage metrics.
 
