@@ -16,6 +16,10 @@ You will need the ``brewkoji`` package::
 
     sudo yum -y install brewkoji
 
+And the ``createrepo`` utility::
+
+    sudo yum -y install createrepo_c
+
 Getting the code
 ----------------
 
