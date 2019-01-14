@@ -135,7 +135,7 @@ def munge_spec(path, build):
     if not m:
         raise ValueError('unable to parse Release %s' % build['release'])
     releaseint = int(m.group())
-    release = '%d.coverage%%{dist}' % releaseint
+    release = '%d.1.coverage%%{dist}' % releaseint
     with open(spec) as fileh:
         lines = fileh.readlines()
     print('rewriting %s with coverage changes' % spec)
