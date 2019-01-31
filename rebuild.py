@@ -192,7 +192,13 @@ def pack_srpm(path):
 
 
 def scratch_build(session, tag, srpm):
-    """ scratch-build the SRPM in Koji. Return the Koji task ID. """
+    """
+    scratch-build the SRPM in Koji. Return the Koji task ID.
+
+    :param session: koji.ClientSession
+    :param str tag: koji tag name, eg  "ceph-3.2-rhel-7"
+    :param str srpm: path to our temporary coverage .src.rpm file
+    """
     target = tag + '-candidate'  # move to separate method?
 
     serverdir = unique_path('cli-build')
