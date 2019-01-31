@@ -201,10 +201,17 @@ def scratch_build(session, tag, srpm):
     """
     target = tag + '-candidate'  # move to separate method?
 
+    # Create a unique temporary directory path to use on the Koji hub server.
+    # Conventionally Koji clients use a "cli-build" prefix here, so we'll do
+    # the same.
     serverdir = unique_path('cli-build')
     callback = _progress_callback
 
+    # Upload our srpm file to the Koji hub.
     session.uploadWrapper(srpm, serverdir, callback=callback)
+
+    # Send the "build" RPC to the Koji hub. "source" is full (server-side)
+    # path to our SRPM.
     source = "%s/%s" % (serverdir, os.path.basename(srpm))
     opts = {'scratch': 'true', 'arch_override': 'x86_64'}
 
