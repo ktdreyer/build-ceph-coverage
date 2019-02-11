@@ -1,6 +1,6 @@
 mkdir -p %{buildroot}/usr/src/coverage/ceph/
 # source (.cc) files:
-cp -r src %{buildroot}/usr/src/coverage/ceph/
+cp -r src/ %{buildroot}/usr/src/coverage/ceph/
 # Not sure why these are directories, but it causes a problem for the next cp
 # operation below:
 rm -r %{buildroot}/usr/src/coverage/ceph/src/ceph-detect-init/ceph_detect_init
@@ -8,7 +8,8 @@ rm -r %{buildroot}/usr/src/coverage/ceph/src/ceph-volume/ceph_volume
 rm -r %{buildroot}/usr/src/coverage/ceph/src/ceph-volume/bin
 rm -r %{buildroot}/usr/src/coverage/ceph/src/ceph-disk/ceph_disk
 # .gcno files:
-cp -r build/src %{buildroot}/usr/src/coverage/ceph/
+#cp -r build/src %{buildroot}/usr/src/coverage/ceph/
+cp -r build/ %{buildroot}/usr/src/coverage/ceph/
 find %{buildroot}/usr/src/coverage/ceph/ -name "*.o" -print0 | xargs -0 rm
 # Don't byte-compile python:
 find %{buildroot}/usr/src/coverage/ceph/ -name "*.py" -print0 | xargs -0 rm
